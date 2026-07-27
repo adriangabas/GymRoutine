@@ -19,6 +19,11 @@ public class EjercicioService {
         return repository.findAll();
     }
 
+    public Ejercicio obtenerPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow();
+    }
+
     public Ejercicio guardar(Ejercicio ejercicio) {
         return repository.save(ejercicio);
     }
