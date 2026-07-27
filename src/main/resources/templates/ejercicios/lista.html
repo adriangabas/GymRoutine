@@ -1,56 +1,119 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejercicios - GymRoutine</title>
+
     <link rel="stylesheet" th:href="@{/css/ejercicios.css}">
 </head>
+
 <body>
+
 <div class="container">
+
     <header class="header">
         <h1 class="header__title">Ejercicios</h1>
-        <p class="header__subtitle">Explora nuestra biblioteca completa de ejercicios para optimizar tu entrenamiento</p>
+
+        <p class="header__subtitle">
+            Explora nuestra biblioteca completa de ejercicios para optimizar tu entrenamiento
+        </p>
     </header>
 
     <main class="main">
+
         <div class="grid">
-            <article class="card" th:each="ejercicio : ${ejercicios}">
+
+            <article class="card"
+                     th:each="ejercicio : ${ejercicios}">
+
                 <div class="card__image-container">
+
                     <img
-                            th:if="${ejercicio.imagenUrl != null}"
+                            th:if="${ejercicio.imagenUrl != null and !#strings.isEmpty(ejercicio.imagenUrl)}"
                             th:src="${ejercicio.imagenUrl}"
                             th:alt="${ejercicio.nombre}"
-                            class="card__image"
-                    >
-                    <div th:unless="${ejercicio.imagenUrl != null}" class="card__placeholder">
-                        <svg class="card__placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            class="card__image">
+
+                    <div
+                            th:unless="${ejercicio.imagenUrl != null and !#strings.isEmpty(ejercicio.imagenUrl)}"
+                            class="card__placeholder">
+
+                        <svg class="card__placeholder-icon"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor">
+
+                            <path stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                         </svg>
+
                     </div>
+
                 </div>
 
                 <div class="card__content">
+
                     <div class="card__header">
-                        <h2 class="card__title" th:text="${ejercicio.nombre}">Nombre del Ejercicio</h2>
-                        <span class="card__muscle" th:text="${ejercicio.musculoPrincipal.nombre}">Grupo Muscular</span>
+
+                        <h2 class="card__title"
+                            th:text="${ejercicio.nombre}">
+                            Nombre del ejercicio
+                        </h2>
+
+                        <span class="card__muscle"
+                              th:text="${ejercicio.musculoPrincipal.nombre}">
+                            Grupo muscular
+                        </span>
+
                     </div>
 
-                    <p class="card__description" th:text="${ejercicio.descripcion}">Descripción del ejercicio</p>
+                    <p class="card__description"
+                       th:text="${ejercicio.descripcion}">
+                        Descripción
+                    </p>
 
                     <div class="card__footer">
-                        <div class="card__material">
-                            <svg class="card__material-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+
+                        <div class="card__material"
+                             th:if="${ejercicio.material != null and !#strings.isEmpty(ejercicio.material)}">
+
+                            <svg class="card__material-icon"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor">
+
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                             </svg>
-                            <span th:text="${ejercicio.material}">Material necesario</span>
+
+                            <span th:text="${ejercicio.material}">
+                                Material
+                            </span>
+
                         </div>
-                        <button class="card__button">Ver ejercicio</button>
+
+                        <a th:href="@{/ejercicios/{id}(id=${ejercicio.id})}"
+                           class="card__button">
+                            Ver ejercicio
+                        </a>
+
                     </div>
+
                 </div>
+
             </article>
+
         </div>
+
     </main>
+
 </div>
+
 </body>
 </html>
