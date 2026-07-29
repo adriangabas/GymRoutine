@@ -19,6 +19,15 @@ public class GrupoMuscularService {
         return repository.findAll();
     }
 
+    public GrupoMuscular obtenerPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "No existe un grupo muscular con el ID: " + id
+                        )
+                );
+    }
+
     public GrupoMuscular guardar(GrupoMuscular grupoMuscular) {
         return repository.save(grupoMuscular);
     }
