@@ -19,13 +19,17 @@ public class EjercicioService {
         return repository.findAll();
     }
 
+
     public Ejercicio obtenerPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow();
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "No existe un ejercicio con el ID: " + id
+                        )
+                );
     }
 
     public Ejercicio guardar(Ejercicio ejercicio) {
         return repository.save(ejercicio);
     }
-
 }

@@ -14,11 +14,24 @@
 <div class="container">
 
     <header class="header">
-        <h1 class="header__title">Ejercicios</h1>
+
+        <div class="header__top">
+
+            <h1 class="header__title">
+                Ejercicios
+            </h1>
+
+            <a th:href="@{/ejercicios/nuevo}"
+               class="header__button">
+                + Nuevo ejercicio
+            </a>
+
+        </div>
 
         <p class="header__subtitle">
             Explora nuestra biblioteca completa de ejercicios para optimizar tu entrenamiento
         </p>
+
     </header>
 
     <main class="main">

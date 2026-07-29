@@ -290,4 +290,47 @@ body {
     .grid {
         grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     }
+
+    .header__top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .header__button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 12px 22px;
+
+        background: #2563eb;
+        color: #ffffff;
+
+        text-decoration: none;
+        font-weight: 600;
+
+        border-radius: 10px;
+
+        transition: .25s;
+    }
+
+    .header__button:hover {
+        background: #1d4ed8;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+
+        .header__top {
+            flex-direction: column;
+        }
+
+        .header__button {
+            width: 100%;
+        }
+
+    }
 }
