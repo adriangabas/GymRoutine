@@ -4,8 +4,12 @@ import dev.adriangabas.gymroutine.entity.Ejercicio;
 import dev.adriangabas.gymroutine.entity.GrupoMuscular;
 import dev.adriangabas.gymroutine.service.EjercicioService;
 import dev.adriangabas.gymroutine.service.GrupoMuscularService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,13 +59,33 @@ public class EjercicioController {
 
     @PostMapping
     public String guardar(
-            @ModelAttribute("ejercicio") Ejercicio ejercicio,
-            @RequestParam Long musculoPrincipalId) {
+            @Valid @ModelAttribute("ejercicio") Ejercicio ejercicio,
+            BindingResult bindingResult,
+            @RequestParam(required = false) Long musculoPrincipalId,
+            Model model) {
 
-        GrupoMuscular grupoMuscular =
-                grupoMuscularService.obtenerPorId(musculoPrincipalId);
+        if (musculoPrincipalId == null) {
+            bindingResult.rejectValue(
+                    "musculoPrincipal",
+                    "NotNull",
+                    "El grupo muscular principal es obligatorio"
+            );
+        } else {
+            GrupoMuscular grupoMuscular =
+                    grupoMuscularService.obtenerPorId(musculoPrincipalId);
 
-        ejercicio.setMusculoPrincipal(grupoMuscular);
+            ejercicio.setMusculoPrincipal(grupoMuscular);
+        }
+
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute(
+                    "gruposMusculares",
+                    grupoMuscularService.obtenerTodos()
+            );
+
+            return "ejercicios/nuevo";
+        }
 
         ejercicioService.guardar(ejercicio);
 
