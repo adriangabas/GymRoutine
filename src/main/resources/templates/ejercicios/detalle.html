@@ -153,6 +153,18 @@
                         Editar ejercicio
                     </a>
 
+                    <form th:action="@{/ejercicios/{id}/eliminar(id=${ejercicio.id})}"
+                          method="post"
+                          class="detail__delete-form"
+                          onsubmit="return confirm('¿Seguro que quieres eliminar este ejercicio?');">
+
+                        <button type="submit"
+                                class="detail__button detail__button--danger">
+                            Eliminar ejercicio
+                        </button>
+
+                    </form>
+
                     <!-- Ver vídeo -->
                     <a th:if="${ejercicio.videoUrl != null and !#strings.isEmpty(ejercicio.videoUrl)}"
                        th:href="${ejercicio.videoUrl}"

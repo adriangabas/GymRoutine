@@ -112,4 +112,12 @@ public class EjercicioController {
 
         return "ejercicios/editar";
     }
+
+    @PostMapping("/{id}/eliminar")
+    public String eliminar(@PathVariable Long id) {
+
+        ejercicioService.eliminar(id);
+
+        return "redirect:/ejercicios";
+    }
 }

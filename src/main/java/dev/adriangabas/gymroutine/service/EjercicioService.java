@@ -19,6 +19,10 @@ public class EjercicioService {
         return repository.findAll();
     }
 
+    public void eliminar(Long id) {
+        repository.deleteById(id);
+    }
+
 
     public Ejercicio obtenerPorId(Long id) {
         return repository.findById(id)
