@@ -145,10 +145,17 @@
 
                 </section>
 
-                <div class="detail__actions"
-                     th:if="${ejercicio.videoUrl != null and !#strings.isEmpty(ejercicio.videoUrl)}">
+                <div class="detail__actions">
 
-                    <a th:href="${ejercicio.videoUrl}"
+                    <!-- Editar ejercicio -->
+                    <a th:href="@{/ejercicios/{id}/editar(id=${ejercicio.id})}"
+                       class="detail__button">
+                        Editar ejercicio
+                    </a>
+
+                    <!-- Ver vídeo -->
+                    <a th:if="${ejercicio.videoUrl != null and !#strings.isEmpty(ejercicio.videoUrl)}"
+                       th:href="${ejercicio.videoUrl}"
                        class="detail__button"
                        target="_blank"
                        rel="noopener noreferrer"

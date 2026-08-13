@@ -68,6 +68,23 @@ public class EjercicioController {
         return "redirect:/ejercicios";
     }
 
+    @PostMapping("/{id}")
+    public String actualizar (
+            @PathVariable Long id,
+            @ModelAttribute("ejercicio") Ejercicio ejercicio,
+            @RequestParam Long musculoPrincipalId
+    ){
+        GrupoMuscular grupoMuscular =
+                grupoMuscularService.obtenerPorId(musculoPrincipalId);
+
+        ejercicio.setId(id);
+        ejercicio.setMusculoPrincipal(grupoMuscular);
+
+        ejercicioService.guardar(ejercicio);
+
+        return "redirect:/ejercicios";
+    }
+
     @GetMapping("/{id}")
     public String obtenerDetalle(
             @PathVariable Long id,
@@ -79,5 +96,20 @@ public class EjercicioController {
         );
 
         return "ejercicios/detalle";
+    }
+
+    @GetMapping("/{id}/editar")
+    public String mostrarFormularioEditar(@PathVariable Long id, Model model) {
+        model.addAttribute(
+                "ejercicio",
+                ejercicioService.obtenerPorId(id)
+        );
+
+        model.addAttribute(
+                "gruposMusculares",
+                grupoMuscularService.obtenerTodos()
+        );
+
+        return "ejercicios/editar";
     }
 }
