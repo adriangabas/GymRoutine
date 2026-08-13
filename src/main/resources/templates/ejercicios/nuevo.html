@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Nuevo ejercicio - GymRoutine</title>
 
     <link rel="stylesheet" th:href="@{/css/nuevo-ejercicio.css}">
@@ -14,10 +15,15 @@
 <div class="container">
 
     <header class="header">
-        <h1 class="header__title">Nuevo ejercicio</h1>
+
+        <h1 class="header__title">
+            Nuevo ejercicio
+        </h1>
+
         <p class="header__subtitle">
             Añade un nuevo ejercicio a la biblioteca.
         </p>
+
     </header>
 
     <main class="main">
@@ -29,20 +35,29 @@
                   method="post"
                   class="form">
 
+                <!-- NOMBRE -->
                 <div class="form__group">
 
                     <label class="form__label" for="nombre">
                         Nombre
                     </label>
 
-                    <input
-                            id="nombre"
-                            type="text"
-                            class="form__input"
-                            th:field="*{nombre}"
-                            placeholder="Ej. Press banca">
+                    <input id="nombre"
+                           type="text"
+                           class="form__input"
+                           th:field="*{nombre}"
+                           placeholder="Ej. Press banca">
+
+                    <p class="form__error"
+                       th:if="${#fields.hasErrors('nombre')}"
+                       th:errors="*{nombre}">
+                        Error de nombre
+                    </p>
+
                 </div>
 
+
+                <!-- GRUPO MUSCULAR -->
                 <div class="form__group">
 
                     <label class="form__label" for="musculoPrincipalId">
@@ -51,8 +66,7 @@
 
                     <select id="musculoPrincipalId"
                             name="musculoPrincipalId"
-                            class="form__select"
-                            required>
+                            class="form__select">
 
                         <option value="">
                             Selecciona un grupo muscular
@@ -66,93 +80,142 @@
 
                     </select>
 
+                    <p class="form__error"
+                       th:if="${#fields.hasErrors('musculoPrincipal')}"
+                       th:errors="*{musculoPrincipal}">
+                        Error de grupo muscular
+                    </p>
+
                 </div>
 
+
+                <!-- MATERIAL -->
                 <div class="form__group">
 
                     <label class="form__label" for="material">
                         Material
                     </label>
 
-                    <input
-                            id="material"
-                            type="text"
-                            class="form__input"
-                            th:field="*{material}"
-                            placeholder="Ej. Barra olímpica">
+                    <input id="material"
+                           type="text"
+                           class="form__input"
+                           th:field="*{material}"
+                           placeholder="Ej. Barra olímpica">
+
+                    <p class="form__error"
+                       th:if="${#fields.hasErrors('material')}"
+                       th:errors="*{material}">
+                        Error de material
+                    </p>
+
                 </div>
 
+
+                <!-- DESCRIPCIÓN -->
                 <div class="form__group">
 
                     <label class="form__label" for="descripcion">
                         Descripción
                     </label>
 
-                    <textarea
-                            id="descripcion"
-                            class="form__textarea"
-                            rows="4"
-                            th:field="*{descripcion}">
+                    <textarea id="descripcion"
+                              class="form__textarea"
+                              rows="4"
+                              th:field="*{descripcion}">
                     </textarea>
+
+                    <p class="form__error"
+                       th:if="${#fields.hasErrors('descripcion')}"
+                       th:errors="*{descripcion}">
+                        Error de descripción
+                    </p>
 
                 </div>
 
+
+                <!-- EJECUCIÓN -->
                 <div class="form__group">
 
                     <label class="form__label" for="ejecucion">
                         Ejecución
                     </label>
 
-                    <textarea
-                            id="ejecucion"
-                            class="form__textarea"
-                            rows="6"
-                            th:field="*{ejecucion}">
+                    <textarea id="ejecucion"
+                              class="form__textarea"
+                              rows="6"
+                              th:field="*{ejecucion}">
                     </textarea>
+
+                    <p class="form__error"
+                       th:if="${#fields.hasErrors('ejecucion')}"
+                       th:errors="*{ejecucion}">
+                        Error de ejecución
+                    </p>
 
                 </div>
 
+
+                <!-- ERRORES FRECUENTES -->
                 <div class="form__group">
 
                     <label class="form__label" for="erroresFrecuentes">
                         Errores frecuentes
                     </label>
 
-                    <textarea
-                            id="erroresFrecuentes"
-                            class="form__textarea"
-                            rows="4"
-                            th:field="*{erroresFrecuentes}">
+                    <textarea id="erroresFrecuentes"
+                              class="form__textarea"
+                              rows="4"
+                              th:field="*{erroresFrecuentes}">
                     </textarea>
 
                 </div>
 
+
+                <!-- IMAGEN -->
                 <div class="form__group">
 
                     <label class="form__label" for="imagenUrl">
                         URL de la imagen
                     </label>
 
-                    <input
-                            id="imagenUrl"
-                            type="url"
-                            class="form__input"
-                            th:field="*{imagenUrl}">
+                    <input id="imagenUrl"
+                           type="url"
+                           class="form__input"
+                           th:field="*{imagenUrl}"
+                           placeholder="https://...">
+
+                    <p class="form__error"
+                       th:if="${#fields.hasErrors('imagenUrl')}"
+                       th:errors="*{imagenUrl}">
+                        Error en la URL de la imagen
+                    </p>
+
                 </div>
 
+
+                <!-- VÍDEO -->
                 <div class="form__group">
 
                     <label class="form__label" for="videoUrl">
                         URL del vídeo
                     </label>
 
-                    <input
-                            id="videoUrl"
-                            type="url"
-                            class="form__input"
-                            th:field="*{videoUrl}">
+                    <input id="videoUrl"
+                           type="url"
+                           class="form__input"
+                           th:field="*{videoUrl}"
+                           placeholder="https://...">
+
+                    <p class="form__error"
+                       th:if="${#fields.hasErrors('videoUrl')}"
+                       th:errors="*{videoUrl}">
+                        Error en la URL del vídeo
+                    </p>
+
                 </div>
 
+
+                <!-- BOTONES -->
                 <div class="form__actions">
 
                     <a th:href="@{/ejercicios}"
@@ -160,12 +223,9 @@
                         Cancelar
                     </a>
 
-                    <button
-                            type="submit"
+                    <button type="submit"
                             class="button button--primary">
-
                         Guardar ejercicio
-
                     </button>
 
                 </div>
