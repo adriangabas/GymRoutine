@@ -348,4 +348,16 @@ body{
 
         justify-content:center;
     }
+
+    .detail__delete-form {
+        display: inline;
+    }
+
+    .detail__button--danger {
+        background: #dc2626;
+    }
+
+    .detail__button--danger:hover {
+        background: #b91c1c;
+    }
 }
