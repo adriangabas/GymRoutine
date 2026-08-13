@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar ejercicio - GymRoutine</title>
+
+    <link rel="stylesheet" th:href="@{/css/nuevo-ejercicio.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="header">
+        <h1 class="header__title">Editar ejercicio</h1>
+        <p class="header__subtitle">
+            Modifica los datos del ejercicio.
+        </p>
+    </header>
+
+    <main class="main">
+
+        <section class="form-card">
+
+            <form th:action="@{/ejercicios/{id}(id=${ejercicio.id})}"
+                  th:object="${ejercicio}"
+                  method="post"
+                  class="form">
+
+                <div class="form__group">
+                    <label class="form__label" for="nombre">
+                        Nombre
+                    </label>
+
+                    <input id="nombre"
+                           type="text"
+                           class="form__input"
+                           th:field="*{nombre}">
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label" for="musculoPrincipalId">
+                        Grupo muscular
+                    </label>
+
+                    <select id="musculoPrincipalId"
+                            name="musculoPrincipalId"
+                            class="form__select"
+                            required>
+
+                        <option value="">
+                            Selecciona un grupo muscular
+                        </option>
+
+                        <option th:each="grupo : ${gruposMusculares}"
+                                th:value="${grupo.id}"
+                                th:text="${grupo.nombre}"
+                                th:selected="${ejercicio.musculoPrincipal != null and ejercicio.musculoPrincipal.id == grupo.id}">
+                        </option>
+
+                    </select>
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label" for="material">
+                        Material
+                    </label>
+
+                    <input id="material"
+                           type="text"
+                           class="form__input"
+                           th:field="*{material}">
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label" for="descripcion">
+                        Descripción
+                    </label>
+
+                    <textarea id="descripcion"
+                              class="form__textarea"
+                              rows="4"
+                              th:field="*{descripcion}">
+                    </textarea>
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label" for="ejecucion">
+                        Ejecución
+                    </label>
+
+                    <textarea id="ejecucion"
+                              class="form__textarea"
+                              rows="6"
+                              th:field="*{ejecucion}">
+                    </textarea>
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label" for="erroresFrecuentes">
+                        Errores frecuentes
+                    </label>
+
+                    <textarea id="erroresFrecuentes"
+                              class="form__textarea"
+                              rows="4"
+                              th:field="*{erroresFrecuentes}">
+                    </textarea>
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label" for="imagenUrl">
+                        URL de la imagen
+                    </label>
+
+                    <input id="imagenUrl"
+                           type="url"
+                           class="form__input"
+                           th:field="*{imagenUrl}">
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label" for="videoUrl">
+                        URL del vídeo
+                    </label>
+
+                    <input id="videoUrl"
+                           type="url"
+                           class="form__input"
+                           th:field="*{videoUrl}">
+                </div>
+
+                <div class="form__actions">
+
+                    <a th:href="@{/ejercicios/{id}(id=${ejercicio.id})}"
+                       class="button button--secondary">
+                        Cancelar
+                    </a>
+
+                    <button type="submit"
+                            class="button button--primary">
+                        Guardar cambios
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>
