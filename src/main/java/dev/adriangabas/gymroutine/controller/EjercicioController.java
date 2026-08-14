@@ -93,20 +93,43 @@ public class EjercicioController {
     }
 
     @PostMapping("/{id}")
-    public String actualizar (
+    public String actualizar(
             @PathVariable Long id,
-            @ModelAttribute("ejercicio") Ejercicio ejercicio,
-            @RequestParam Long musculoPrincipalId
-    ){
-        GrupoMuscular grupoMuscular =
-                grupoMuscularService.obtenerPorId(musculoPrincipalId);
+            @Valid @ModelAttribute("ejercicio") Ejercicio ejercicio,
+            BindingResult bindingResult,
+            @RequestParam(required = false) Long musculoPrincipalId,
+            Model model) {
+
+        if (musculoPrincipalId == null) {
+            bindingResult.rejectValue(
+                    "musculoPrincipal",
+                    "NotNull",
+                    "El grupo muscular principal es obligatorio"
+            );
+        } else {
+            GrupoMuscular grupoMuscular =
+                    grupoMuscularService.obtenerPorId(musculoPrincipalId);
+
+            ejercicio.setMusculoPrincipal(grupoMuscular);
+        }
+
+        if (bindingResult.hasErrors()) {
+
+            ejercicio.setId(id);
+
+            model.addAttribute(
+                    "gruposMusculares",
+                    grupoMuscularService.obtenerTodos()
+            );
+
+            return "ejercicios/editar";
+        }
 
         ejercicio.setId(id);
-        ejercicio.setMusculoPrincipal(grupoMuscular);
 
         ejercicioService.guardar(ejercicio);
 
-        return "redirect:/ejercicios";
+        return "redirect:/ejercicios/" + id;
     }
 
     @GetMapping("/{id}")
