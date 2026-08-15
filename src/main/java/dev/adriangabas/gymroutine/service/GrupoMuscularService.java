@@ -31,4 +31,8 @@ public class GrupoMuscularService {
     public GrupoMuscular guardar(GrupoMuscular grupoMuscular) {
         return repository.save(grupoMuscular);
     }
+
+    public void eliminar(Long id) {
+        repository.deleteById(id);
+    }
 }
