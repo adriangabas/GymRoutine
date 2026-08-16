@@ -10,9 +10,11 @@ import java.util.List;
 public class GrupoMuscularService {
 
     private final GrupoMuscularRepository repository;
+    private final GrupoMuscularRepository grupoMuscularRepository;
 
-    public GrupoMuscularService(GrupoMuscularRepository repository) {
+    public GrupoMuscularService(GrupoMuscularRepository repository, GrupoMuscularRepository grupoMuscularRepository) {
         this.repository = repository;
+        this.grupoMuscularRepository = grupoMuscularRepository;
     }
 
     public List<GrupoMuscular> obtenerTodos() {
