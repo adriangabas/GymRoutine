@@ -35,6 +35,6 @@ public class GrupoMuscularService {
     }
 
     public void eliminar(Long id) {
-        grupoMuscularRepository.deleteById(id);
+        repository.deleteById(id);
     }
 }
