@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nuevo grupo muscular - GymRoutine</title>
+
+    <link rel="stylesheet" th:href="@{/css/nuevo-ejercicio.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="header">
+
+        <h1 class="header__title">
+            Nuevo grupo muscular
+        </h1>
+
+        <p class="header__subtitle">
+            Añade un nuevo grupo muscular a GymRoutine.
+        </p>
+
+    </header>
+
+    <main class="main">
+
+        <section class="form-card">
+
+            <form th:action="@{/grupos}"
+                  th:object="${grupo}"
+                  method="post"
+                  class="form">
+
+                <div class="form__group">
+
+                    <label class="form__label" for="nombre">
+                        Nombre
+                    </label>
+
+                    <input id="nombre"
+                           type="text"
+                           class="form__input"
+                           th:field="*{nombre}"
+                           placeholder="Ej. Pectoral">
+
+                    <p class="form__error"
+                       th:if="${#fields.hasErrors('nombre')}"
+                       th:errors="*{nombre}">
+                        Error de nombre
+                    </p>
+
+                </div>
+
+                <div class="form__group">
+
+                    <label class="form__label" for="descripcion">
+                        Descripción
+                    </label>
+
+                    <textarea id="descripcion"
+                              class="form__textarea"
+                              rows="5"
+                              th:field="*{descripcion}"
+                              placeholder="Describe brevemente este grupo muscular">
+                    </textarea>
+
+                    <p class="form__error"
+                       th:if="${#fields.hasErrors('descripcion')}"
+                       th:errors="*{descripcion}">
+                        Error de descripción
+                    </p>
+
+                </div>
+
+                <div class="form__group">
+
+                    <label class="form__label" for="imagenUrl">
+                        URL de la imagen
+                    </label>
+
+                    <input id="imagenUrl"
+                           type="url"
+                           class="form__input"
+                           th:field="*{imagenUrl}"
+                           placeholder="https://...">
+
+                    <p class="form__error"
+                       th:if="${#fields.hasErrors('imagenUrl')}"
+                       th:errors="*{imagenUrl}">
+                        Error en la URL de la imagen
+                    </p>
+
+                </div>
+
+                <div class="form__actions">
+
+                    <a th:href="@{/grupos}"
+                       class="button button--secondary">
+                        Cancelar
+                    </a>
+
+                    <button type="submit"
+                            class="button button--primary">
+                        Guardar grupo
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>
