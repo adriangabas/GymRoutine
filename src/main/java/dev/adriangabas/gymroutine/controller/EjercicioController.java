@@ -31,13 +31,24 @@ public class EjercicioController {
     }
 
     @GetMapping
-    public String obtenerTodos(Model model) {
+    public String obtenerTodos(
+        @RequestParam(required = false) String buscar,
+        Model model) {
 
-        model.addAttribute(
-                "ejercicios",
-                ejercicioService.obtenerTodos()
-        );
+        if (buscar == null || buscar.isBlank()) {
+            model.addAttribute(
+                    "ejercicios",
+                    ejercicioService.obtenerTodos()
+                    );
 
+        }else{
+            model.addAttribute(
+                    "ejercicios",
+                    ejercicioService.buscarPorNombre(buscar)
+            );
+
+
+        }
         return "ejercicios/lista";
     }
 

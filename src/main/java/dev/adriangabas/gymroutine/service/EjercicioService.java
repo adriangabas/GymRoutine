@@ -15,6 +15,10 @@ public class EjercicioService {
         this.repository = repository;
     }
 
+    public List<Ejercicio> buscarPorNombre(String nombre) {
+        return repository.findByNombreContainingIgnoreCase(nombre);
+    }
+
     public List<Ejercicio> obtenerTodos() {
         return repository.findAll();
     }

@@ -34,9 +34,46 @@
 
     </header>
 
+    <form th:action="@{/ejercicios}"
+          method="get"
+          class="search">
+
+        <input type="text"
+               name="buscar"
+               class="search__input"
+               placeholder="Buscar ejercicio por nombre..."
+               th:value="${param.buscar}">
+
+
+        <button type="submit"
+                class="search__button">
+            Buscar
+        </button>
+
+    </form>
+
     <main class="main">
 
-        <div class="grid">
+        <div class="empty-state"
+             th:if="${#lists.isEmpty(ejercicios)}">
+
+            <h2 class="empty-state__title">
+                No se han encontrado ejercicios
+            </h2>
+
+            <p class="empty-state__text">
+                Prueba con otro nombre o vuelve a mostrar todos los ejercicios.
+            </p>
+
+            <a th:href="@{/ejercicios}"
+               class="empty-state__button">
+                Ver todos los ejercicios
+            </a>
+
+        </div>
+
+        <div class="grid"
+            th:unless="${#lists.isEmpty(ejercicios)}">
 
             <article class="card"
                      th:each="ejercicio : ${ejercicios}">
