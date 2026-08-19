@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Error - GymRoutine</title>
+
+    <link rel="stylesheet" th:href="@{/css/nuevo-ejercicio.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <main class="main">
+
+        <section class="form-card">
+
+            <header class="header">
+
+                <h1 class="header__title">
+                    No se puede eliminar el grupo muscular
+                </h1>
+
+                <p class="header__subtitle">
+                    El grupo muscular está siendo utilizado actualmente.
+                </p>
+
+            </header>
+
+            <div class="form__group">
+
+                <p class="form__error"
+                   th:text="${mensajeError}">
+                    No se puede eliminar este grupo muscular porque tiene ejercicios asociados.
+                </p>
+
+            </div>
+
+            <div class="form__actions">
+
+                <a th:href="@{/grupos}"
+                   class="button button--primary">
+                    Volver a grupos musculares
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>
