@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Grupos musculares - GymRoutine</title>
+
+    <link rel="stylesheet" th:href="@{/css/ejercicios.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header class="header">
+
+        <div class="header__top">
+
+            <h1 class="header__title">
+                Grupos musculares
+            </h1>
+
+            <a th:href="@{/grupos/nuevo}"
+               class="header__button">
+                + Nuevo grupo
+            </a>
+
+        </div>
+
+        <p class="header__subtitle">
+            Explora los grupos musculares disponibles en GymRoutine
+        </p>
+
+    </header>
+
+    <main class="main">
+
+        <div class="grid">
+
+            <article class="card"
+                     th:each="grupo : ${grupos}">
+
+                <div class="card__image-container">
+
+                    <img
+                            th:if="${grupo.imagenUrl != null and !#strings.isEmpty(grupo.imagenUrl)}"
+                            th:src="${grupo.imagenUrl}"
+                            th:alt="${grupo.nombre}"
+                            class="card__image">
+
+                    <div
+                            th:unless="${grupo.imagenUrl != null and !#strings.isEmpty(grupo.imagenUrl)}"
+                            class="card__placeholder">
+
+                        <svg class="card__placeholder-icon"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor">
+
+                            <path stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2"
+                                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+
+                    </div>
+
+                </div>
+
+                <div class="card__content">
+
+                    <div class="card__header">
+
+                        <h2 class="card__title"
+                            th:text="${grupo.nombre}">
+                            Nombre del grupo muscular
+                        </h2>
+
+                    </div>
+
+                    <p class="card__description"
+                       th:text="${grupo.descripcion}">
+                        Descripción del grupo muscular
+                    </p>
+
+                    <div class="card__footer">
+
+                        <a th:href="@{/grupos/{id}(id=${grupo.id})}"
+                           class="card__button">
+                            Ver grupo
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>
