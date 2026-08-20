@@ -19,6 +19,10 @@ public class EjercicioService {
         return repository.findByNombreContainingIgnoreCase(nombre);
     }
 
+    public List<Ejercicio> buscarPorGrupoMuscular(Long id) {
+        return repository.findByMusculoPrincipalId(id);
+    }
+
     public List<Ejercicio> obtenerTodos() {
         return repository.findAll();
     }

@@ -423,4 +423,22 @@ body {
     .empty-state__button:hover {
         background: #1d4ed8;
     }
+    .search__select {
+        padding: 14px 16px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+
+        background: #ffffff;
+        color: #1e293b;
+
+        font-size: 1rem;
+
+        cursor: pointer;
+    }
+
+    .search__select:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
 }

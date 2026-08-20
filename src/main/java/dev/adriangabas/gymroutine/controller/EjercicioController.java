@@ -33,22 +33,36 @@ public class EjercicioController {
     @GetMapping
     public String obtenerTodos(
         @RequestParam(required = false) String buscar,
+        @RequestParam(required = false) Long grupoId,
         Model model) {
 
-        if (buscar == null || buscar.isBlank()) {
+        if (grupoId != null) {
+
             model.addAttribute(
                     "ejercicios",
-                    ejercicioService.obtenerTodos()
-                    );
+                    ejercicioService.buscarPorGrupoMuscular(grupoId)
+            );
 
-        }else{
+        } else if (buscar != null && !buscar.isBlank()) {
+
             model.addAttribute(
                     "ejercicios",
                     ejercicioService.buscarPorNombre(buscar)
             );
 
+        } else {
 
+            model.addAttribute(
+                    "ejercicios",
+                    ejercicioService.obtenerTodos()
+            );
         }
+
+        model.addAttribute(
+                "gruposMusculares",
+                grupoMuscularService.obtenerTodos()
+        );
+
         return "ejercicios/lista";
     }
 

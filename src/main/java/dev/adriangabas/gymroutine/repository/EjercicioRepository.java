@@ -11,4 +11,6 @@ public interface EjercicioRepository
     boolean existsByMusculoPrincipalId(Long id);
 
     List<Ejercicio> findByNombreContainingIgnoreCase(String nombre);
+
+    List<Ejercicio> findByMusculoPrincipalId(Long id);
 }
