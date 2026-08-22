@@ -1,6 +1,7 @@
 package dev.adriangabas.gymroutine.service;
 
 import dev.adriangabas.gymroutine.entity.GrupoMuscular;
+import dev.adriangabas.gymroutine.exception.GrupoMuscularDuplicadoException;
 import dev.adriangabas.gymroutine.exception.GrupoMuscularEnUsoException;
 import dev.adriangabas.gymroutine.repository.EjercicioRepository;
 import dev.adriangabas.gymroutine.repository.GrupoMuscularRepository;
@@ -36,6 +37,29 @@ public class GrupoMuscularService {
     }
 
     public GrupoMuscular guardar(GrupoMuscular grupoMuscular) {
+
+        if (grupoMuscular.getId() == null) {
+
+            if (grupoMuscularRepository.existsByNombreIgnoreCase(
+                    grupoMuscular.getNombre())) {
+
+                throw new GrupoMuscularDuplicadoException(
+                        "Grupo Muscular existe en el sistema."
+                );
+            }
+
+        } else {
+
+            if (grupoMuscularRepository.existsByNombreIgnoreCaseAndIdNot(
+                    grupoMuscular.getNombre(),
+                    grupoMuscular.getId())) {
+
+                throw new GrupoMuscularDuplicadoException(
+                        "Grupo Muscular existe en el sistema."
+                );
+            }
+        }
+
         return grupoMuscularRepository.save(grupoMuscular);
     }
 

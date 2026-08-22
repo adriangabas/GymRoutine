@@ -20,4 +20,17 @@ public class GlobalExceptionHandler {
 
         return "error/grupo-muscular-en-uso";
     }
+
+    @ExceptionHandler(GrupoMuscularDuplicadoException.class)
+    public String manejarGrupoMuscularDuplicado(
+            GrupoMuscularDuplicadoException exception,
+            Model model) {
+
+        model.addAttribute(
+                "mensajeError",
+                exception.getMessage()
+        );
+
+        return "error/grupo-muscular-duplicado";
+    }
 }
