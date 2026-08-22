@@ -32,11 +32,18 @@ public class EjercicioController {
 
     @GetMapping
     public String obtenerTodos(
-        @RequestParam(required = false) String buscar,
-        @RequestParam(required = false) Long grupoId,
-        Model model) {
+            @RequestParam(required = false) String buscar,
+            @RequestParam(required = false) Long grupoId,
+            Model model) {
 
-        if (grupoId != null) {
+        if (buscar != null && !buscar.isBlank() && grupoId != null) {
+
+            model.addAttribute(
+                    "ejercicios",
+                    ejercicioService.buscarPorNombreYGrupoMuscular(buscar, grupoId)
+            );
+
+        } else if (grupoId != null) {
 
             model.addAttribute(
                     "ejercicios",

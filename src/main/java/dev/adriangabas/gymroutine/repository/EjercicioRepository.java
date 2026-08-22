@@ -13,4 +13,6 @@ public interface EjercicioRepository
     List<Ejercicio> findByNombreContainingIgnoreCase(String nombre);
 
     List<Ejercicio> findByMusculoPrincipalId(Long id);
+
+    List<Ejercicio> findByNombreContainingIgnoreCaseAndMusculoPrincipalId(String nombre, Long id);
 }
