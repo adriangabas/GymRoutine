@@ -2,6 +2,7 @@ package dev.adriangabas.gymroutine.service;
 
 import dev.adriangabas.gymroutine.entity.Ejercicio;
 import dev.adriangabas.gymroutine.exception.EjercicioDuplicadoException;
+import dev.adriangabas.gymroutine.exception.EjercicioNoEncontradoException;
 import dev.adriangabas.gymroutine.exception.GrupoMuscularEnUsoException;
 import dev.adriangabas.gymroutine.repository.EjercicioRepository;
 import dev.adriangabas.gymroutine.repository.GrupoMuscularRepository;
@@ -52,7 +53,7 @@ public class EjercicioService {
     public Ejercicio obtenerPorId(Long id) {
         return repository.findById(id)
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new EjercicioNoEncontradoException(
                                 "No existe un ejercicio con el ID: " + id
                         )
                 );

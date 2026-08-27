@@ -3,6 +3,7 @@ package dev.adriangabas.gymroutine.service;
 import dev.adriangabas.gymroutine.entity.GrupoMuscular;
 import dev.adriangabas.gymroutine.exception.GrupoMuscularDuplicadoException;
 import dev.adriangabas.gymroutine.exception.GrupoMuscularEnUsoException;
+import dev.adriangabas.gymroutine.exception.GrupoMuscularNoEncontradoException;
 import dev.adriangabas.gymroutine.repository.EjercicioRepository;
 import dev.adriangabas.gymroutine.repository.GrupoMuscularRepository;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class GrupoMuscularService {
     public GrupoMuscular obtenerPorId(Long id) {
         return grupoMuscularRepository.findById(id)
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new GrupoMuscularNoEncontradoException(
                                 "No existe un grupo muscular con el ID: " + id
                         )
                 );
