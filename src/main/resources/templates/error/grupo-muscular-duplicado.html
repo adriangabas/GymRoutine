@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Grupo muscular duplicado - GymRoutine</title>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Grupo muscular duplicado</h1>
+
+    <p th:text="${mensajeError}">
+        Ya existe un grupo muscular con ese nombre.
+    </p>
+
+    <a th:href="@{/grupos}">
+        Volver a grupos musculares
+    </a>
+
+</div>
+
+</body>
+</html>

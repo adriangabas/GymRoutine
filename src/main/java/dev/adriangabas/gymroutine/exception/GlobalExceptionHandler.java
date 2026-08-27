@@ -20,4 +20,43 @@ public class GlobalExceptionHandler {
 
         return "error/grupo-muscular-en-uso";
     }
+
+    @ExceptionHandler(GrupoMuscularDuplicadoException.class)
+    public String manejarGrupoMuscularDuplicado(
+            GrupoMuscularDuplicadoException exception,
+            Model model) {
+
+        model.addAttribute(
+                "mensajeError",
+                exception.getMessage()
+        );
+
+        return "error/grupo-muscular-duplicado";
+    }
+
+    @ExceptionHandler(EjercicioNoEncontradoException.class)
+    public String manejarEjercicioNoEncontrado(
+            EjercicioNoEncontradoException exception,
+            Model model) {
+
+        model.addAttribute(
+                "mensajeError",
+                exception.getMessage()
+        );
+
+        return "error/ejercicio-no-encontrado";
+    }
+
+    @ExceptionHandler(GrupoMuscularNoEncontradoException.class)
+    public String manejarGrupoMuscularNoEncontrado(
+            GrupoMuscularNoEncontradoException exception,
+            Model model) {
+
+        model.addAttribute(
+                "mensajeError",
+                exception.getMessage()
+        );
+
+        return "error/grupo-muscular-no-encontrado";
+    }
 }

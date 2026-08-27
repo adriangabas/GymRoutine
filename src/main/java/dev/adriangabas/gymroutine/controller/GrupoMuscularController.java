@@ -1,6 +1,7 @@
 package dev.adriangabas.gymroutine.controller;
 
 import dev.adriangabas.gymroutine.entity.GrupoMuscular;
+import dev.adriangabas.gymroutine.exception.GrupoMuscularDuplicadoException;
 import dev.adriangabas.gymroutine.service.GrupoMuscularService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -53,7 +54,19 @@ public class GrupoMuscularController {
             return "grupos/formulario";
         }
 
-        grupoMuscularService.guardar(grupoMuscular);
+        try {
+            grupoMuscularService.guardar(grupoMuscular);
+
+        } catch (GrupoMuscularDuplicadoException exception) {
+
+            bindingResult.rejectValue(
+                    "nombre",
+                    "duplicado",
+                    exception.getMessage()
+            );
+
+            return "grupos/formulario";
+        }
 
         return "redirect:/grupos";
     }
@@ -96,7 +109,19 @@ public class GrupoMuscularController {
 
         grupoMuscular.setId(id);
 
-        grupoMuscularService.guardar(grupoMuscular);
+        try {
+            grupoMuscularService.guardar(grupoMuscular);
+
+        } catch (GrupoMuscularDuplicadoException exception) {
+
+            bindingResult.rejectValue(
+                    "nombre",
+                    "duplicado",
+                    exception.getMessage()
+            );
+
+            return "grupos/editar";
+        }
 
         return "redirect:/grupos";
     }

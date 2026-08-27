@@ -44,6 +44,21 @@
                placeholder="Buscar ejercicio por nombre..."
                th:value="${param.buscar}">
 
+        <select name="grupoId"
+                class="search__select">
+
+            <option value="">
+                Todos los grupos
+            </option>
+
+            <option th:each="grupo : ${gruposMusculares}"
+                    th:value="${grupo.id}"
+                    th:text="${grupo.nombre}"
+                    th:selected="${param.grupoId != null and param.grupoId[0] == grupo.id.toString()}">
+            </option>
+
+        </select>
+
 
         <button type="submit"
                 class="search__button">

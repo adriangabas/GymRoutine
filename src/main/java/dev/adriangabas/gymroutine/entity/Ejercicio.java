@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Table(name = "ejercicios")
@@ -11,47 +12,48 @@ public class Ejercicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //Nombre
+    // Nombre
     @NotBlank(message = "El nombre es obligatorio.")
     @Size(max = 150, message = "El nombre no puede superar los 150 caracteres.")
-    @Column(nullable = false,unique = true, length = 150)
+    @Column(nullable = false, unique = true, length = 150)
     private String nombre;
 
-    //Descripcion
+    // Descripción
     @NotBlank(message = "La descripción es obligatoria.")
     @Lob
     @Column(nullable = false)
     private String descripcion;
 
-    //Ejecucion
-    @NotBlank(message = "La ejecucion es obligatoria")
+    // Ejecución
+    @NotBlank(message = "La ejecución es obligatoria.")
     @Lob
     @Column(nullable = false)
     private String ejecucion;
 
-    //Errores frecuentes
+    // Errores frecuentes
     @Lob
-    @Column(name= "errores_frecuentes")
+    @Column(name = "errores_frecuentes")
     private String erroresFrecuentes;
 
-    //Material
-    @Size(max= 150, message = "El material no puede superar los 150 caracteres")
+    // Material
+    @Size(max = 150, message = "El material no puede superar los 150 caracteres.")
     @Column(length = 150)
     private String material;
 
-    //Musculo Principal
-    @NotNull(message = "El grupo muscular principal es obligatorio")
+    // Músculo principal
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "musculo_principal_id", nullable = false)
     private GrupoMuscular musculoPrincipal;
 
-    //Imagen
+    // Imagen
+    @URL(message = "La URL de la imagen no es válida.")
     @Size(max = 500, message = "La URL de la imagen no puede superar los 500 caracteres.")
     @Column(name = "imagen_url", length = 500)
     private String imagenUrl;
 
-    //Video
-    @Size(max = 500, message = "La URL del video no puede superar los 500 caracteres.")
+    // Vídeo
+    @URL(message = "La URL del vídeo no es válida.")
+    @Size(max = 500, message = "La URL del vídeo no puede superar los 500 caracteres.")
     @Column(name = "video_url", length = 500)
     private String videoUrl;
 

@@ -3,6 +3,7 @@ package dev.adriangabas.gymroutine.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.URL;
 
 @Entity
 @Table(name = "grupos_musculares")
@@ -21,13 +22,10 @@ public class GrupoMuscular {
     @Column(name = "descripcion")
     private String descripcion;
 
+    @URL(message = "La URL de la imagen no es válida.")
     @Size(max = 500, message = "La URL de la imagen no puede superar los 500 caracteres.")
     @Column(name = "imagen_url", length = 500)
     private String imagenUrl;
-
-    // ==========================
-    // Constructores
-    // ==========================
 
     public GrupoMuscular() {
     }
@@ -38,10 +36,6 @@ public class GrupoMuscular {
         this.descripcion = descripcion;
         this.imagenUrl = imagenUrl;
     }
-
-    // ==========================
-    // Getters y Setters
-    // ==========================
 
     public Long getId() {
         return id;

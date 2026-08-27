@@ -2,6 +2,7 @@ package dev.adriangabas.gymroutine.controller;
 
 import dev.adriangabas.gymroutine.entity.Ejercicio;
 import dev.adriangabas.gymroutine.entity.GrupoMuscular;
+import dev.adriangabas.gymroutine.exception.EjercicioDuplicadoException;
 import dev.adriangabas.gymroutine.service.EjercicioService;
 import dev.adriangabas.gymroutine.service.GrupoMuscularService;
 
@@ -32,23 +33,44 @@ public class EjercicioController {
 
     @GetMapping
     public String obtenerTodos(
-        @RequestParam(required = false) String buscar,
-        Model model) {
+            @RequestParam(required = false) String buscar,
+            @RequestParam(required = false) Long grupoId,
+            Model model) {
 
-        if (buscar == null || buscar.isBlank()) {
+        if (buscar != null && !buscar.isBlank() && grupoId != null) {
+
             model.addAttribute(
                     "ejercicios",
-                    ejercicioService.obtenerTodos()
-                    );
+                    ejercicioService.buscarPorNombreYGrupoMuscular(buscar, grupoId)
+            );
 
-        }else{
+        } else if (grupoId != null) {
+
+            model.addAttribute(
+                    "ejercicios",
+                    ejercicioService.buscarPorGrupoMuscular(grupoId)
+            );
+
+        } else if (buscar != null && !buscar.isBlank()) {
+
             model.addAttribute(
                     "ejercicios",
                     ejercicioService.buscarPorNombre(buscar)
             );
 
+        } else {
 
+            model.addAttribute(
+                    "ejercicios",
+                    ejercicioService.obtenerTodos()
+            );
         }
+
+        model.addAttribute(
+                "gruposMusculares",
+                grupoMuscularService.obtenerTodos()
+        );
+
         return "ejercicios/lista";
     }
 
@@ -98,7 +120,25 @@ public class EjercicioController {
             return "ejercicios/nuevo";
         }
 
-        ejercicioService.guardar(ejercicio);
+        try {
+
+            ejercicioService.guardar(ejercicio);
+
+        } catch (EjercicioDuplicadoException exception) {
+
+            bindingResult.rejectValue(
+                    "nombre",
+                    "duplicado",
+                    exception.getMessage()
+            );
+
+            model.addAttribute(
+                    "gruposMusculares",
+                    grupoMuscularService.obtenerTodos()
+            );
+
+            return "ejercicios/nuevo";
+        }
 
         return "redirect:/ejercicios";
     }
@@ -138,7 +178,25 @@ public class EjercicioController {
 
         ejercicio.setId(id);
 
-        ejercicioService.guardar(ejercicio);
+        try {
+
+            ejercicioService.guardar(ejercicio);
+
+        } catch (EjercicioDuplicadoException exception) {
+
+            bindingResult.rejectValue(
+                    "nombre",
+                    "duplicado",
+                    exception.getMessage()
+            );
+
+            model.addAttribute(
+                    "gruposMusculares",
+                    grupoMuscularService.obtenerTodos()
+            );
+
+            return "ejercicios/editar";
+        }
 
         return "redirect:/ejercicios/" + id;
     }
