@@ -1,7 +1,10 @@
 package dev.adriangabas.gymroutine.service;
 
 import dev.adriangabas.gymroutine.entity.Ejercicio;
+import dev.adriangabas.gymroutine.exception.EjercicioDuplicadoException;
+import dev.adriangabas.gymroutine.exception.GrupoMuscularEnUsoException;
 import dev.adriangabas.gymroutine.repository.EjercicioRepository;
+import dev.adriangabas.gymroutine.repository.GrupoMuscularRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +13,11 @@ import java.util.List;
 public class EjercicioService {
 
     private final EjercicioRepository repository;
+    private final EjercicioRepository ejercicioRepository;
 
-    public EjercicioService (EjercicioRepository repository) {
+    public EjercicioService (EjercicioRepository repository, EjercicioRepository ejercicioRepository) {
         this.repository = repository;
+        this.ejercicioRepository = ejercicioRepository;
     }
 
     public List<Ejercicio> buscarPorNombre(String nombre) {
@@ -54,6 +59,29 @@ public class EjercicioService {
     }
 
     public Ejercicio guardar(Ejercicio ejercicio) {
-        return repository.save(ejercicio);
+
+        if (ejercicio.getId() == null) {
+
+            if (ejercicioRepository.existsByNombreIgnoreCase(
+                    ejercicio.getNombre())) {
+
+                throw new EjercicioDuplicadoException(
+                        "Ya existe un ejercicio con ese nombre."
+                );
+            }
+
+        } else {
+
+            if (ejercicioRepository.existsByNombreIgnoreCaseAndIdNot(
+                    ejercicio.getNombre(),
+                    ejercicio.getId())) {
+
+                throw new EjercicioDuplicadoException(
+                        "Ya existe un ejercicio con ese nombre."
+                );
+            }
+        }
+
+        return ejercicioRepository.save(ejercicio);
     }
 }

@@ -2,6 +2,7 @@ package dev.adriangabas.gymroutine.controller;
 
 import dev.adriangabas.gymroutine.entity.Ejercicio;
 import dev.adriangabas.gymroutine.entity.GrupoMuscular;
+import dev.adriangabas.gymroutine.exception.EjercicioDuplicadoException;
 import dev.adriangabas.gymroutine.service.EjercicioService;
 import dev.adriangabas.gymroutine.service.GrupoMuscularService;
 
@@ -119,7 +120,25 @@ public class EjercicioController {
             return "ejercicios/nuevo";
         }
 
-        ejercicioService.guardar(ejercicio);
+        try {
+
+            ejercicioService.guardar(ejercicio);
+
+        } catch (EjercicioDuplicadoException exception) {
+
+            bindingResult.rejectValue(
+                    "nombre",
+                    "duplicado",
+                    exception.getMessage()
+            );
+
+            model.addAttribute(
+                    "gruposMusculares",
+                    grupoMuscularService.obtenerTodos()
+            );
+
+            return "ejercicios/nuevo";
+        }
 
         return "redirect:/ejercicios";
     }
@@ -159,7 +178,25 @@ public class EjercicioController {
 
         ejercicio.setId(id);
 
-        ejercicioService.guardar(ejercicio);
+        try {
+
+            ejercicioService.guardar(ejercicio);
+
+        } catch (EjercicioDuplicadoException exception) {
+
+            bindingResult.rejectValue(
+                    "nombre",
+                    "duplicado",
+                    exception.getMessage()
+            );
+
+            model.addAttribute(
+                    "gruposMusculares",
+                    grupoMuscularService.obtenerTodos()
+            );
+
+            return "ejercicios/editar";
+        }
 
         return "redirect:/ejercicios/" + id;
     }

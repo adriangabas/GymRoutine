@@ -38,6 +38,11 @@
                            type="text"
                            class="form__input"
                            th:field="*{nombre}">
+                    <p class="form__error"
+                       th:if="${#fields.hasErrors('nombre')}"
+                       th:errors="*{nombre}">
+                        Error de nombre
+                    </p>
                 </div>
 
                 <div class="form__group">

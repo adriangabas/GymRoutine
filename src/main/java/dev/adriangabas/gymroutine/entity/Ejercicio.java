@@ -40,7 +40,6 @@ public class Ejercicio {
     private String material;
 
     //Musculo Principal
-    @NotNull(message = "El grupo muscular principal es obligatorio")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "musculo_principal_id", nullable = false)
     private GrupoMuscular musculoPrincipal;
