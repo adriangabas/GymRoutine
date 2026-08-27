@@ -3,9 +3,7 @@ package dev.adriangabas.gymroutine.service;
 import dev.adriangabas.gymroutine.entity.Ejercicio;
 import dev.adriangabas.gymroutine.exception.EjercicioDuplicadoException;
 import dev.adriangabas.gymroutine.exception.EjercicioNoEncontradoException;
-import dev.adriangabas.gymroutine.exception.GrupoMuscularEnUsoException;
 import dev.adriangabas.gymroutine.repository.EjercicioRepository;
-import dev.adriangabas.gymroutine.repository.GrupoMuscularRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,45 +11,41 @@ import java.util.List;
 @Service
 public class EjercicioService {
 
-    private final EjercicioRepository repository;
     private final EjercicioRepository ejercicioRepository;
 
-    public EjercicioService (EjercicioRepository repository, EjercicioRepository ejercicioRepository) {
-        this.repository = repository;
+    public EjercicioService(EjercicioRepository ejercicioRepository) {
         this.ejercicioRepository = ejercicioRepository;
     }
 
     public List<Ejercicio> buscarPorNombre(String nombre) {
-        return repository.findByNombreContainingIgnoreCase(nombre);
+        return ejercicioRepository.findByNombreContainingIgnoreCase(nombre);
     }
 
     public List<Ejercicio> buscarPorGrupoMuscular(Long id) {
-        return repository.findByMusculoPrincipalId(id);
+        return ejercicioRepository.findByMusculoPrincipalId(id);
     }
 
     public List<Ejercicio> buscarPorNombreYGrupoMuscular(
             String nombre,
             Long id) {
 
-        return repository
+        return ejercicioRepository
                 .findByNombreContainingIgnoreCaseAndMusculoPrincipalId(
                         nombre,
                         id
                 );
-
     }
 
     public List<Ejercicio> obtenerTodos() {
-        return repository.findAll();
+        return ejercicioRepository.findAll();
     }
 
     public void eliminar(Long id) {
-        repository.deleteById(id);
+        ejercicioRepository.deleteById(id);
     }
 
-
     public Ejercicio obtenerPorId(Long id) {
-        return repository.findById(id)
+        return ejercicioRepository.findById(id)
                 .orElseThrow(() ->
                         new EjercicioNoEncontradoException(
                                 "No existe un ejercicio con el ID: " + id
