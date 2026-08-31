@@ -39,26 +39,28 @@ public class GrupoMuscularService {
 
     public GrupoMuscular guardar(GrupoMuscular grupoMuscular) {
 
+        boolean duplicado;
+
         if (grupoMuscular.getId() == null) {
 
-            if (grupoMuscularRepository.existsByNombreIgnoreCase(
-                    grupoMuscular.getNombre())) {
-
-                throw new GrupoMuscularDuplicadoException(
-                        "Grupo Muscular existe en el sistema."
-                );
-            }
+            duplicado =
+                    grupoMuscularRepository.existsByNombreIgnoreCase(
+                            grupoMuscular.getNombre()
+                    );
 
         } else {
 
-            if (grupoMuscularRepository.existsByNombreIgnoreCaseAndIdNot(
-                    grupoMuscular.getNombre(),
-                    grupoMuscular.getId())) {
+            duplicado =
+                    grupoMuscularRepository.existsByNombreIgnoreCaseAndIdNot(
+                            grupoMuscular.getNombre(),
+                            grupoMuscular.getId()
+                    );
+        }
 
-                throw new GrupoMuscularDuplicadoException(
-                        "Grupo Muscular existe en el sistema."
-                );
-            }
+        if (duplicado) {
+            throw new GrupoMuscularDuplicadoException(
+                    "Ya existe un grupo muscular con ese nombre."
+            );
         }
 
         return grupoMuscularRepository.save(grupoMuscular);
