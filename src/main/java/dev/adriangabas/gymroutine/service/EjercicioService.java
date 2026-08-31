@@ -40,10 +40,6 @@ public class EjercicioService {
         return ejercicioRepository.findAll();
     }
 
-    public void eliminar(Long id) {
-        ejercicioRepository.deleteById(id);
-    }
-
     public Ejercicio obtenerPorId(Long id) {
         return ejercicioRepository.findById(id)
                 .orElseThrow(() ->
@@ -55,28 +51,34 @@ public class EjercicioService {
 
     public Ejercicio guardar(Ejercicio ejercicio) {
 
+        boolean duplicado;
+
         if (ejercicio.getId() == null) {
 
-            if (ejercicioRepository.existsByNombreIgnoreCase(
-                    ejercicio.getNombre())) {
-
-                throw new EjercicioDuplicadoException(
-                        "Ya existe un ejercicio con ese nombre."
-                );
-            }
+            duplicado =
+                    ejercicioRepository.existsByNombreIgnoreCase(
+                            ejercicio.getNombre()
+                    );
 
         } else {
 
-            if (ejercicioRepository.existsByNombreIgnoreCaseAndIdNot(
-                    ejercicio.getNombre(),
-                    ejercicio.getId())) {
+            duplicado =
+                    ejercicioRepository.existsByNombreIgnoreCaseAndIdNot(
+                            ejercicio.getNombre(),
+                            ejercicio.getId()
+                    );
+        }
 
-                throw new EjercicioDuplicadoException(
-                        "Ya existe un ejercicio con ese nombre."
-                );
-            }
+        if (duplicado) {
+            throw new EjercicioDuplicadoException(
+                    "Ya existe un ejercicio con ese nombre."
+            );
         }
 
         return ejercicioRepository.save(ejercicio);
+    }
+
+    public void eliminar(Long id) {
+        ejercicioRepository.deleteById(id);
     }
 }
